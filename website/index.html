@@ -1,0 +1,186 @@
+<html>
+    <head>
+        <title>Maximus - Portfolio</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/res/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/res/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/res/favicon/favicon-16x16.png">
+        <link rel="manifest" href="/res/favicon/site.webmanifest">
+    </head>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+        :root{
+            --bg-main: #665989;
+            --dark-purple: #2B253A;
+            --purple-txt:#7a6aa3;
+            --blue-txt:#46A3CB;
+        }
+        body{
+            background-color: var(--bg-main);
+            overflow-x: hidden;
+            color:white;
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 700;
+        }
+        #header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        #projects, #contact{
+            background-color: var(--dark-purple);
+            z-index: 1;
+            width: 100vw;
+        }
+
+        .title{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap:20px;
+            color:white;
+            padding: 80px;
+        }
+        .title>img{
+            width:150px;
+        }
+        .title>h1{
+            font-size: 3em;
+        }
+
+        .shadowBox{
+            box-shadow: 0px 4px 43px 19px rgba(0, 0, 0, .25);
+            background-color: var(--dark-purple);
+        }
+        .flex{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            gap:20px;
+        }
+        .flexC{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap:20px;
+        }
+        img{
+            background-color: transparent !important;
+        }
+
+        #skills, #contact{
+            min-height: 100vh;
+        }
+        
+        .unselectable {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+
+        /*SCROLL*/
+        .scroll{
+            overflow-y: auto; 
+            list-style-type: none; 
+            transition: filter 1s ease-out;
+        }
+        .scroll::-webkit-scrollbar {
+            width: 14px;
+        }
+
+        .scroll::-webkit-scrollbar-thumb {
+            background-color: var(--bs-secondary);
+            padding: 0 4px;
+            border-right:4px solid transparent;
+            border-left:4px solid transparent;
+            background-clip: padding-box;
+            border-radius: 6px;
+        }
+    </style>
+    <body>
+        <div id="header"></div>
+
+        <div id="projects">
+            <div class="title">
+                <img src="./res/plan.svg" alt="Plan image">
+                <h1>Projects</h1>
+            </div>
+
+            <div id="projectsDiv" class="flexC"></div>
+        </div>
+
+        <div id="skills">
+            <div class="title">
+                <img src="./res/brain.svg" alt="Brain image">
+                <h1>Skills</h1>
+            </div>
+
+            <div id="skillsDiv" class="flexC"></div>
+        </div>
+
+        <div id="contact">
+            <div class="title">
+                <img src="./res/contact.svg" alt="Contact image">
+                <h1>Contact</h1>
+            </div>
+
+            <div id="contactDiv" class="flexC"></div>
+        </div>
+
+        <footer class="flexC"></footer>
+    </body>
+
+    <script>
+        $("#header").load("components/header.html");
+        $("#projectsDiv").load("components/projects.html");
+        $("#skillsDiv").load("components/skills.html");
+        $("#contactDiv").load("components/contact.html");
+        $("footer").load("components/footer.html");
+
+        var langList = {
+            "SQL": {
+                "color": "#e38c00"
+            },
+            "Java": {
+                "color": "#b07219",
+            },
+            "JavaScript": {
+                "color": "#f1e05a",
+            },
+            "HTML": {
+                "color": "#e34c26",
+            },
+            "C": {
+                "color": "#438eff",
+            },
+            "C++": {
+                "color": "#6866fb",
+            },
+            "C#": {
+                "color": "#178600",
+            },
+            "CSS":{
+                "color": "#563d7c",
+            },
+            "Other":{
+                "color":"#FFFFFF",
+            }
+        };
+    </script>
+</html>

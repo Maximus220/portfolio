@@ -1,0 +1,361 @@
+<div id="btnSorting" class="flexC">
+    <div class="flex sortingBar">
+        <div id="projectCategories" class="flex">
+            <div id="projectCat" class="projectCategoryBtn unselectable flex projectSelected" onclick="showProjects()">💻 Programming</div>
+            <div id="vidCat" class="projectCategoryBtn unselectable flex" onclick="showMontage()">📹 Montage</div>
+        </div>
+    </div>
+    <div class="flex sortingBar" id="programmingSorting">
+        <div id="sortingBarWrapper" class="flex"></div>
+    </div>
+</div>
+
+<div id="projectDisplay" class='flexC'></div>
+
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+    //doc ready
+    $(document).ready(function() {
+        setTimeout(function() {
+            AOS.init();
+        }, 1000);
+    });
+
+    // var categories = {
+    //     "AI":[],
+    //     "Website":[],
+    //     "Software":[],
+    //     "Hardware":[],
+    //     "Simulation":[],
+    // }
+    var categories = [
+        ["AI",[]],
+        ["Website",[]],
+        ["Software",[]],
+        ["Hardware",[]],
+        ["Simulation",[]]
+    ]
+
+    var projects = [];
+    var topics = {};
+    $.ajax({
+        type: "POST",
+        url: "/projectList",
+        success: function(data)
+        {
+            console.log(data)
+            projects = data;
+            projects.forEach((p,i)=>{
+                // $("#projectDisplay").append(getProjectDisplay(p, i%2).prop("outerHTML"));
+                // p.topics.forEach((t)=>{
+                //     if(!topics[t]){
+                //         topics[t] = [];
+                //     }
+                //     topics[t].push(p);
+                // });
+                categories.forEach((cat)=>{
+                    if(p.topics.includes(cat[0].toLowerCase())){
+                        cat[1].push(p);
+                    }
+                });
+            })
+
+            initSortingBar();
+            showProjects();
+        }
+    });
+
+    var videos = [];
+    $.ajax({
+        type: "POST",
+        url: "/videoList",
+        success: function(data)
+        {
+            videos = data;
+        }
+    });
+
+    //swiper bar
+    // function initSortingBar(){
+    //     //Sort topics from array size
+    //     topics = Object.entries(topics).sort((a,b)=>{
+    //         return b[1].length - a[1].length;
+    //     });
+    //     topics.forEach((t)=>{
+    //         if(t[1].length>1){
+    //             $("#sortingBarWrapper").append(`<div class="unselectable flex topic swiper-slide" data-topic="${t[0]}">${t[0]}</div>`);
+    //         }
+    //     });
+    //     $(".topic").click(function(){
+    //         let topic = $(this).attr("data-topic");
+    //         changeTopic(topic);
+    //     });
+    //     setTimeout(function() {
+    //         var sortingBar = new Swiper("#sortingBar", {
+    //             slidesPerView: 5,
+    //             centeredSlides: true,
+    //             spaceBetween: 20,
+    //             loop: false,
+    //             slideActiveClass:"topicSelected",
+    //             slideToClickedSlide:true
+    //         });
+
+    //         sortingBar.on('realIndexChange', function () {
+    //             // console.log('slide changed');
+    //             // console.log(sortingBar.realIndex);
+    //             changeTopic(topics[sortingBar.realIndex][0]);
+    //         });
+    //     }, 1000);
+    // }
+
+    function initSortingBar(){
+        //Sort topics from array size
+        topics = categories.sort((a,b)=>{
+            return b[1].length - a[1].length;
+        });
+        topics.forEach((t)=>{
+            if(t[1].length>1){
+                $("#sortingBarWrapper").append(`<div class="unselectable flex topic" data-topic="${t[0]}">${t[0]}</div>`);
+            }
+        });
+        $(".topic").click(function(){
+            let topic = $(this).attr("data-topic");
+            changeTopic(topic);
+            // $(".topicSelected").removeClass("topicSelected");
+            // $(this).addClass("topicSelected");
+        });
+    }
+
+    function changeTopic(topic){
+
+        $("#sortingBarWrapper").children().each(function(i,item){
+            if($(item).attr("data-topic")==topic){
+                $(".topicSelected").removeClass("topicSelected");
+                $(item).addClass("topicSelected");
+            }
+        });
+
+        let projects = topics.find((t)=>{
+            return t[0]==topic;
+        })[1];
+        $("#projectDisplay").empty();
+        projects.forEach((p,i)=>{
+            console.log(p)
+            $("#projectDisplay").append(getProjectDisplay(p, i%2).prop("outerHTML"));
+        });
+        AOS.refreshHard();
+    }
+
+    function getProjectDisplay(project, imageLeft){
+        let d = $("<div>");
+        d.addClass("project flexC");
+        d.append("<h1>"+project.name+"</h1>");
+        let p1 = $("<div>");
+        let p2 = $("<div>");
+        p1.addClass("flexC imageWrapper");
+        p2.addClass("flexC leftDisplaysProject "+(imageLeft?"leftDisplay":""));
+        p2.css("z-index","1")
+
+        //IMG
+        p1.append("<img class='shadowBox projectImage' src='"+project.image+"' alt='projectImage' data-aos='"+(imageLeft?"fade-left":"fade-right")+"'></img>")
+        p2.attr("data-aos",(!imageLeft?"fade-left":"fade-right"))
+
+        //DESCRIPTION & LANGS
+        p2.append("<div class='projectDescription shadowBox "+(imageLeft?"projectDescriptionLeft":"")+"'>"+project.description+"</div>");
+        let langListDiv = $("<div>");
+        langListDiv.addClass("flex listDiv")
+        let langListP = Object.entries(project.langList)
+        let tot = langListP.reduce((a,b)=>{if(a[1])return a[1]+b[1];else return a+b[1];},0);
+        langListP.forEach(([name, amount])=>{
+            let percent = amount / tot * 100;
+            if(percent>30){
+                langListDiv.append("<div class='languageWrapper shadowBox flex'><div class='languageColor' style='background-color:"+(langList[name]?langList[name].color:langList["Other"].color)+";'></div>"+name+"</div>");
+            }
+        });
+        p2.append(langListDiv);
+
+        //TAGS
+        let tagsList = $("<div>");
+        tagsList.addClass("flex listDiv");
+        project.topics.forEach((tag)=>{
+            tagsList.append("<div class='tag shadowBox'>#"+tag+"</div>");
+        });
+        p2.append(tagsList);
+
+        //BTN
+        let btnList = $("<div>");
+        btnList.addClass("flex listDiv");
+        btnList.append("<a class='btn-icon' href='https://github.com/Maximus220/"+project.github+"' target='_blank'><img src='./res/github.svg'></a>");
+        if(project.homepage) btnList.append("<a class='btn-icon' href='"+project.homepage+"' target='_blank'><img src='./res/play.svg'></a>");
+        p2.append(btnList);
+
+        if(!imageLeft){
+            d.append("<div class='flex'>"+p1.prop('outerHTML')+p2.prop('outerHTML')+"</div>");
+        }else{
+            d.append("<div class='flex'>"+p2.prop('outerHTML')+p1.prop('outerHTML')+"</div>");
+        }
+        
+        return d;
+    }
+
+    function getVideoDisplay(project, imageLeft){
+        let d = $("<div>");
+        d.addClass("project flexC");
+        d.append("<h1>"+project.title+"</h1>");
+        let p1 = $("<div>");
+        let p2 = $("<div>");
+        p1.addClass("flexC imageWrapper");
+        p2.addClass("flexC leftDisplaysProject "+(imageLeft?"leftDisplay":""));
+        p2.css("z-index","1")
+
+        //IMG
+        p1.append("<img class='shadowBox projectImage' src='"+(project.img?project.img:"https://img.youtube.com/vi/"+project.id+"/maxresdefault.jpg")+"' alt='projectImage' data-aos='"+(imageLeft?"fade-left":"fade-right")+"'></img>")
+        p2.attr("data-aos",(!imageLeft?"fade-left":"fade-right"))
+
+        //DESCRIPTION & LANGS
+        p2.append("<div class='projectDescription shadowBox "+(imageLeft?"projectDescriptionLeft":"")+"'>"+project.description+"</div>");
+
+        //BTN
+        let btnList = $("<div>");
+        btnList.addClass("flex listDiv");
+        btnList.append("<a class='btn-icon' href='https://youtu.be/"+project.id+"' target='_blank'><img src='./res/play.svg'></a>");
+        p2.append(btnList);
+
+        if(!imageLeft){
+            d.append("<div class='flex'>"+p1.prop('outerHTML')+p2.prop('outerHTML')+"</div>");
+        }else{
+            d.append("<div class='flex'>"+p2.prop('outerHTML')+p1.prop('outerHTML')+"</div>");
+        }
+        
+        return d;
+    }
+
+    function showMontage(){
+        $("#programmingSorting").css("display","none");
+        $("#projectDisplay").empty();
+        videos.forEach((v,i)=>{
+            $("#projectDisplay").append(getVideoDisplay(v, i%2).prop("outerHTML"));
+        })
+        AOS.refreshHard();
+        $(".projectSelected").removeClass("projectSelected")
+        $("#vidCat").addClass("projectSelected");
+    }
+
+    function showProjects(){
+        $("#programmingSorting").css("display","flex");
+        $("#projectDisplay").empty();
+        changeTopic("Website");
+        AOS.refreshHard();
+        $(".projectSelected").removeClass("projectSelected")
+        $("#projectCat").addClass("projectSelected");
+    }
+</script>
+
+<style>
+    #btnSorting{
+        gap:25px;
+        padding-bottom:50px;
+    }
+    .topic{
+        padding: 10px 20px 10px 20px;
+        border-radius: 25px;
+        border: solid 3px var(--blue-txt);
+        cursor: pointer;
+        color:var(--blue-txt);
+        text-align: center;
+        font-size:0.9em;
+    }
+    .projectCategoryBtn{
+        padding: 10px 20px 10px 20px;
+        border-radius: 25px;
+        border: solid 3px var(--purple-txt);
+        cursor: pointer;
+        color:var(--purple-txt);
+        text-align: center;
+        font-size:1.2em;
+    }
+    .projectSelected{
+        background-color: var(--purple-txt);
+        color: white;
+    }
+    .topicSelected{
+        background-color: var(--blue-txt);
+        color: white;
+    }
+
+    .leftDisplaysProject{
+        align-items: flex-start;
+        max-width:625px;
+    }
+    #projectDisplay{
+        gap:150px;
+    }
+    .projectImage{
+        border-radius: 25px;
+        min-width: 560px;
+        max-height: 560px;
+        max-width: 100%;
+        max-height: 560px;
+        width: auto;
+        height: auto;
+    }
+    .imageWrapper{
+        max-width: 800px;
+    }
+    .projectDescription{
+        padding: 25px 45px 25px 45px;
+        margin-left: -75px;
+        max-width: 560px;
+        border-radius: 25px;
+        font-size: 1.1em;
+        text-align: right;
+    }
+    .projectDescriptionLeft{
+        margin-left: 0px;
+        margin-right: -75px;
+        text-align: left;
+    }
+    .languageColor{
+        width: 23px;
+        height:23px;
+        border-radius: 50%;
+    }
+    .project{
+        color:white;
+        gap:20px;
+    }
+    .languageWrapper{
+        gap:10px;
+        padding: 13px;
+        border-radius: 25px;
+        font-size: .9rem;
+    }
+    .listDiv{
+        gap:10px;
+        max-width: 625px;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+    .leftDisplay{
+        align-items: flex-end;
+    }
+    .leftDisplay > div{
+        justify-content: flex-end;
+    }
+    .tag{
+        color:var(--blue-txt);
+        padding: 13px;
+        border-radius: 25px;
+        font-size: .9rem;
+    }
+    .btn-icon>img{
+        width:50px;
+    }
+
+    #projectsDiv{
+        padding-bottom:100px;
+    }
+</style>

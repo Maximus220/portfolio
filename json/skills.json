@@ -1,0 +1,132 @@
+{
+    "Web programming":[
+        {
+            "name":"JavaScript",
+            "img":"javascript"
+        },
+        {
+            "name":"P5.JS",
+            "imgPath":"../res/skills/p5.png"
+        },
+        {
+            "name":"HTML",
+            "img":"html5"
+        },
+        {
+            "name":"CSS",
+            "img":"css3"
+        },
+        {
+            "name":"Bootstrap",
+            "img":"bootstrap"
+        },
+        {
+            "name":"SQL",
+            "imgPath":"../res/skills/sql.svg"
+        },
+        {
+            "name":"Maria DB",
+            "imgPath":"../res/skills/mariadb.png"
+        },
+        {
+            "name":"Express JS",
+            "imgPath":"../res/skills/expressjs.png"
+        },
+        {
+            "name":"Socket IO",
+            "imgPath":"../res/skills/socketio.svg"
+        },
+        {
+            "name":"Anime JS",
+            "imgPath":"../res/skills/AnimeJS.png"
+        }
+        
+    ],
+    "Software development":[
+        {
+            "name":"NodeJS",
+            "img":"nodejs"
+        },
+        {
+            "name":"Java",
+            "img":"java"
+        },
+        {
+            "name":"Java FX",
+            "imgPath":"../res/skills/javafx.svg"
+        },
+        {
+            "name":"Processing",
+            "imgPath":"../res/skills/processing.png"
+        },
+        {
+            "name":"Unity",
+            "img":"unity"
+        },
+        {
+            "name":"C++",
+            "img":"cplusplus"
+        },
+        {
+            "name":"C",
+            "img":"c"
+        },
+        {
+            "name":"Python",
+            "img":"python"
+        },
+        {
+            "name":"Electron JS",
+            "img":"electron"
+        },
+        {
+            "name":"Git",
+            "img":"git"
+        }
+    ],
+    "Hardware":[
+        {
+            "name":"Arduino",
+            "img":"arduino"
+        },
+        {
+            "name":"Raspberry PI",
+            "img":"raspberrypi"
+        },
+        {
+            "name":"Johnny Five",
+            "imgPath":"../res/skills/j5.svg"
+        },
+        {
+            "name":"Tinker CAD",
+            "imgPath":"../res/skills/tinkercad.webp"
+        }
+    ],
+    "Software":[
+        {
+            "name":"Premiere pro",
+            "img":"premierepro"
+        },
+        {
+            "name":"Blender",
+            "img":"blender"
+        },
+        {
+            "name":"Photoshop",
+            "imgPath":"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg"
+        },
+        {
+            "name":"After Effects",
+            "img":"aftereffects"
+        },
+        {
+            "name":"Illustrator",
+            "imgPath":"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg"
+        },
+        {
+            "name":"Excell",
+            "imgPath":"../res/skills/excell.svg"
+        }
+    ],
+    "LinkFormat":"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/{name}/{name}-original.svg"
+}

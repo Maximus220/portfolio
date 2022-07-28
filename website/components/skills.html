@@ -1,0 +1,185 @@
+<div id="skillsDisplay" class='flex'>
+    <div id="skillCategories"></div>
+
+    <div id="skillList" class="flexC shadowBox">
+        <div id="skillListContent" class="flex scroll"></div>
+        <div id="skillBtn" class="flex">See related projects</div>
+    </div>
+</div>
+
+<script>
+    var skills = {};
+    $.ajax({
+        type: "POST",
+        url: "/skillList",
+        success: function(data)
+        {
+            console.log(data)
+            skills = data;
+            loadSkills();
+            selectCategory("Web programming");
+        }
+    });
+
+    function loadSkills(){
+        Object.entries(skills).forEach(([category, skills],i)=>{
+            if(category!="LinkFormat"){
+                let d = $("<div>").addClass("skillCategory flex shadowBox unselectable").attr("data-category",category).css("justify-content","flex-start");
+                d.append("<img class='skillCatImg' src='/res/skills/categories/"+category.replace(" ","").toLowerCase()+".svg' /><span>"+category+"</span>");
+                $("#skillCategories").append(d.prop("outerHTML"));
+            }
+        });
+
+        $(".skillCategory").click(function(){
+            let topic = $(this).attr("data-category");
+            selectCategory(topic);
+        });
+    }
+
+    function selectCategory(category){
+        $("#skillCategories").children().each(function(i,item){
+            if($(item).attr("data-category")==category){
+                $(".skillCatSelected").removeClass("skillCatSelected");
+                $(item).addClass("skillCatSelected");
+            }
+        });
+
+        $("#skillListContent").empty();
+        skills[category].forEach((skill,i)=>{
+            let skillD = $("<div>").addClass("skillDiv flexC");
+            skillD.append('<img class="skillImg img-shadow" src="'+(skill.imgPath?skill.imgPath:skillImg(skill.img))+'">');
+            skillD.append(`<div class="skillName">${skill.name}</div>`);
+            $("#skillListContent").append(skillD)
+        });
+
+        $("#skillBtn").click(function(){ //NOT RESPONSIVE TO JSON
+            scrollTo("projects");
+            switch(category){
+                case "Software":
+                    showMontage();
+                    break;
+                case "Web programming":
+                    showProjects();
+                    changeTopic("Website");
+                    break;
+                case "Hardware":
+                    showProjects();
+                    changeTopic("Hardware");
+                    break;
+                case "Software development":
+                    showProjects();
+                    changeTopic("Software");
+                    break;
+            }
+        });
+    }
+
+
+    function addCategory(category, skills, isRight){
+        let d = $("<div>").addClass("flexC skillCategory "+((isRight)?"":"skillCategoryLeft"));
+        d.append(`<div class="skillCategoryTitle">${category}</div>`);
+        let skillListD = $("<div>").addClass("skillList flex "+((isRight)?"":"skillListLeft"));
+        skills.forEach((skill,i)=>{
+            let skillD = $("<div>").addClass("skillDiv flexC");
+            skillD.append('<img class="skillImg img-shadow" src="'+(skill.imgPath?skill.imgPath:skillImg(skill.img))+'">');
+            skillD.append(`<div class="skillName">${skill.name}</div>`);
+            skillListD.append(skillD);
+        })
+        d.append(skillListD);
+        return d;
+    }
+
+    function skillImg(name){
+        return skills["LinkFormat"].replaceAll("{name}", name);
+    }
+</script>
+
+<style>
+    #skillsDiv{
+        padding-bottom:100px;
+    }
+    .skillCatImg{
+        width: 50px;
+        margin-right: 10px;
+    }
+    .skillCategory{
+        background-color: var(--dark-purple);
+        padding: 20px 20px 20px 30px;
+        border-radius: 25px;
+        width: 400px;
+        height: 90px;
+        transition: all 0.3s ease-in-out;
+        /* margin-right: -325px; */
+        transform: translateX(150px);
+        margin-top: 25px;
+        border: 5px solid transparent;
+        z-index: 1;
+    }
+    .skillCategory:hover{
+        transform: translateX(-35px);
+    }
+    .skillCatSelected{
+        transform: translateX(-35px);
+        border: 5px solid #8468CF;
+    }
+    .skillCategory>span{
+        font-size: 1.5em;
+        max-width: 200px;
+        overflow-wrap: normal;
+    }
+    #skillCategories{
+        margin-right: -160px;
+    }
+    #skillList{
+        width: 60vw;
+        max-width:1000px;
+        min-height:500px;
+        height: 60vh;
+        background-color: var(--dark-purple);
+        border-radius: 25px;
+        z-index: 2;
+        justify-content: space-between;
+        padding: 50px;
+    }
+    #skillsDisplay{
+        align-items: flex-start;
+    }
+    #skillListContent{
+        height: 100%;
+        justify-content:center;
+        column-gap:50px;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .skillDiv{
+        width:100px;
+        gap:10px;
+    }
+    .img-shadow{
+        filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.5));
+    }
+    .skillDiv>img{
+        width:75px;
+    }
+    .skillName{
+        font-weight:bold;
+        font-size: 1.4em;
+        text-align: center;
+    }
+
+    #skillBtn{
+        padding: 10px 20px 10px 20px;
+        border-radius: 25px;
+        border: solid 3px var(--blue-txt);
+        cursor: pointer;
+        color:var(--blue-txt);
+        text-align: center;
+        font-size:1.2em;
+        transition: all 0.3s ease-in-out;
+    }
+    #skillBtn:hover{
+        background-color: var(--blue-txt);
+        color: white;
+    }
+</style>
