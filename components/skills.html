@@ -14,8 +14,8 @@
 <script>
     var skills = {};
     $.ajax({
-        type: "POST",
-        url: "/skillList",
+        dataType: "json",
+        url: "/json/skills.json",
         success: function(data)
         {
             console.log(data)
