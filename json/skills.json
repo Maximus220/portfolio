@@ -9,6 +9,10 @@
             "imgPath":"../res/skills/p5.png"
         },
         {
+            "name":"Vue",
+            "img":"vuejs"
+        },
+        {
             "name":"HTML",
             "img":"html5"
         },

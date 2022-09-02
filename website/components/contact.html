@@ -1,17 +1,17 @@
 <div id="contactList">
-    <a class="contactEl" href="https://twitter.com/Maximus_pro_" style="background-color:#00ACEE;">
+    <a class="contactEl" href="https://twitter.com/Maximus_pro_" style="background-color:#00ACEE;" target="_blank">
         <img src="./res/twitter.svg" alt="Twitter logo">
     </a>
 
-    <a class="contactEl" href="https://github.com/Maximus220" style="background-color:#333;">
+    <a class="contactEl" href="https://github.com/Maximus220" style="background-color:#333;" target="_blank">
         <img src="./res/github_full.svg" alt="Github logo">
     </a>
 
-    <a class="contactEl" onclick="alert('@Maxime ・ マキシム#9555')" style="background-color:#5865F2;">
+    <a class="contactEl" onclick="alert('@Maxime ・ マキシム#9555')" style="background-color:#5865F2;" target="_blank">
         <img src="./res/discord.svg" alt="Discord logo">
     </a>
 
-    <a class="contactEl" href="https://www.youtube.com/channel/UCNlnUX3b5PHX0cWpRKo1Lcw" style="background-color:#B2071D;">
+    <a class="contactEl" href="https://www.youtube.com/channel/UCNlnUX3b5PHX0cWpRKo1Lcw" style="background-color:#B2071D;" target="_blank">
         <img src="./res/youtube.svg" alt="Youtube logo">
     </a>
 
@@ -21,6 +21,13 @@
 </div>
 
 <script>
+    // anime({
+    //     targets: '#contactList .contactEl',
+    //     translateY: -50,
+    //     delay: anime.stagger(200), // increase delay by 100ms for each elements.
+    //     direction: 'alternate',
+    //     loop: true,
+    // });
     // let contacts = {
     //     "Discord":"@Maxime ・ マキシム#9555",
     //     "Email":"cmaximus2207@outlook.fr",
@@ -35,14 +42,18 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 250px;
-        height: 250px;
+        width: 150px;
+        height: 150px;
         border-radius: 25px;
         padding: 30px;
         cursor: pointer;
     }
     .contactEl>img{
-        width: 120px;
+        width: 80px;
+        transition: all 0.3s ease-in-out;
+    }
+    .contactEl:hover>img{
+        width: 100px;
     }
     #contactList{
         display: flex;
@@ -56,5 +67,6 @@
     }    
     #contactDiv{
         padding-bottom:100px;
+        min-height: 500px;
     }
 </style>

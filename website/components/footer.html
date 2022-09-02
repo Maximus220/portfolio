@@ -1,14 +1,60 @@
+
 <div>
-    
+    <img class="logoFooter" src="./res/logotxt.png" alt="Maximus logo">
 </div>
 
-<div>
-
+<div class="textFooter">
+    <span>Made by Maxime,</span>
+    <br/>
+    <a href="https://github.com/Maximus220/portfolio" target="_blank"><span class="githubFooterText"><img src="./res/github_full.svg"/>See on github</span></a>
 </div>
 
 <style>
+    @media (max-width: 600px) {
+        .logoFooter{
+            width: 100% !important;
+            padding-top:0px !important;
+            padding-bottom:100px;
+        }
+        footer{
+            margin-bottom:0px !important;
+            gap:10px !important;
+        }
+    }
+    .githubFooterText{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        gap:10px;
+    }
+    .githubFooterText img{
+        width:40px;
+        height:40px;
+    }
+    a{
+        text-decoration: underline;
+        color:white;
+    }
+    a:hover{
+        color:white;
+    }
+    .textFooter{
+        font-weight:bold;
+        text-align: center;
+        color: #ffffff;
+        font-size:2rem;
+    }
+    .logoFooter{
+        width: auto;
+        height: 200px;
+    }
     footer{
         background-color: var(--bg-main);
         height:300px;
+        display: flex;
+        flex-direction: row;
+        /* justify-content: space-around !important; */
+        align-items: center;
+        gap:200px !important;
     }
 </style>

@@ -11,11 +11,10 @@
 </div>
 
 <div id="projectDisplay" class='flexC'></div>
-
+<div id="projectDisplayResp" class='flexC'></div>
 
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
 <script>
     //doc ready
     $(document).ready(function() {
@@ -142,6 +141,15 @@
             return t[0]==topic;
         })[1];
         $("#projectDisplay").empty();
+        //order by project langlist sum
+        // projects.sort((a,b)=>{
+        //     let l1 = Object.entries(a.langList).reduce((a,b)=>{if(a[1])return a[1]+b[1];else return a+b[1];},0);
+        //     let l2 = Object.entries(b.langList).reduce((a,b)=>{if(a[1])return a[1]+b[1];else return a+b[1];},0);
+        //     console.log(a.name, l1)
+        //     return l2-l1;
+        // });
+        // console.log(projects)
+
         projects.forEach((p,i)=>{
             console.log(p)
             $("#projectDisplay").append(getProjectDisplay(p, i%2).prop("outerHTML"));
@@ -201,6 +209,56 @@
         return d;
     }
 
+    // function getProjectDisplayResponsive(project){
+    //     let d = $("<div>");
+    //     d.addClass("project flexC");
+    //     d.append("<h1>"+project.name+"</h1>");
+    //     let p1 = $("<div>");
+    //     let p2 = $("<div>");
+    //     p1.addClass("flexC imageWrapper");
+    //     p2.addClass("flexC leftDisplaysProject");
+
+    //     //IMG
+    //     p1.append("<img class='shadowBox projectImage' src='"+project.image+"' alt='projectImage'></img>")
+
+    //     //DESCRIPTION & LANGS
+    //     p2.append("<div class='projectDescription shadowBox "+(imageLeft?"projectDescriptionLeft":"")+"'>"+project.description+"</div>");
+    //     let langListDiv = $("<div>");
+    //     langListDiv.addClass("flex listDiv")
+    //     let langListP = Object.entries(project.langList)
+    //     let tot = langListP.reduce((a,b)=>{if(a[1])return a[1]+b[1];else return a+b[1];},0);
+    //     langListP.forEach(([name, amount])=>{
+    //         let percent = amount / tot * 100;
+    //         if(percent>30){
+    //             langListDiv.append("<div class='languageWrapper shadowBox flex'><div class='languageColor' style='background-color:"+(langList[name]?langList[name].color:langList["Other"].color)+";'></div>"+name+"</div>");
+    //         }
+    //     });
+    //     p2.append(langListDiv);
+
+    //     //TAGS
+    //     let tagsList = $("<div>");
+    //     tagsList.addClass("flex listDiv");
+    //     project.topics.forEach((tag)=>{
+    //         tagsList.append("<div class='tag shadowBox'>#"+tag+"</div>");
+    //     });
+    //     p2.append(tagsList);
+
+    //     //BTN
+    //     let btnList = $("<div>");
+    //     btnList.addClass("flex listDiv");
+    //     btnList.append("<a class='btn-icon' href='https://github.com/Maximus220/"+project.github+"' target='_blank'><img src='./res/github.svg'></a>");
+    //     if(project.homepage) btnList.append("<a class='btn-icon' href='"+project.homepage+"' target='_blank'><img src='./res/play.svg'></a>");
+    //     p2.append(btnList);
+
+    //     if(!imageLeft){
+    //         d.append("<div class='flex'>"+p1.prop('outerHTML')+p2.prop('outerHTML')+"</div>");
+    //     }else{
+    //         d.append("<div class='flex'>"+p2.prop('outerHTML')+p1.prop('outerHTML')+"</div>");
+    //     }
+        
+    //     return d;
+    // }
+
     function getVideoDisplay(project, imageLeft){
         let d = $("<div>");
         d.addClass("project flexC");
@@ -255,6 +313,22 @@
 </script>
 
 <style>
+    /* REPSPONSIVE */
+    @media (max-width: 600px) {
+        #projectDisplay{
+            display:none !important;
+        }
+        #projectDisplayResp{
+            display: flex !important;
+        }
+    
+    }
+
+    #projectDisplayResp{
+        display: none;
+    }
+
+    /* NORMAL FEATURES */
     #btnSorting{
         gap:25px;
         padding-bottom:50px;

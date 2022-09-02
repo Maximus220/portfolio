@@ -5,6 +5,10 @@
         <div id="skillListContent" class="flex scroll"></div>
         <div id="skillBtn" class="flex">See related projects</div>
     </div>
+
+    <div id="responsiveSkillList" class="flexC">
+
+    </div>
 </div>
 
 <script>
@@ -27,6 +31,14 @@
                 let d = $("<div>").addClass("skillCategory flex shadowBox unselectable").attr("data-category",category).css("justify-content","flex-start");
                 d.append("<img class='skillCatImg' src='/res/skills/categories/"+category.replace(" ","").toLowerCase()+".svg' /><span>"+category+"</span>");
                 $("#skillCategories").append(d.prop("outerHTML"));
+
+                let dd = $("<div>").addClass("skillCatRes flex");
+                dd.append("<div class='resTitle'><img class='skillCatImg' src='/res/skills/categories/"+category.replace(" ","").toLowerCase()+".svg' /><span>"+category+"</span></div>");
+                skills.forEach((skill,i)=>{
+                    let skillD = skillDiv(skill);
+                    dd.append(skillD);
+                });
+                $("#responsiveSkillList").append(dd.prop("outerHTML"));
             }
         });
 
@@ -34,6 +46,13 @@
             let topic = $(this).attr("data-category");
             selectCategory(topic);
         });
+    }
+
+    function skillDiv(skill){
+        let skillD = $("<div>").addClass("skillDiv flexC");
+        skillD.append('<img class="skillImg img-shadow" src="'+(skill.imgPath?skill.imgPath:skillImg(skill.img))+'">');
+        skillD.append(`<div class="skillName">${skill.name}</div>`);
+        return skillD;
     }
 
     function selectCategory(category){
@@ -46,9 +65,7 @@
 
         $("#skillListContent").empty();
         skills[category].forEach((skill,i)=>{
-            let skillD = $("<div>").addClass("skillDiv flexC");
-            skillD.append('<img class="skillImg img-shadow" src="'+(skill.imgPath?skill.imgPath:skillImg(skill.img))+'">');
-            skillD.append(`<div class="skillName">${skill.name}</div>`);
+            let skillD = skillDiv(skill);
             $("#skillListContent").append(skillD)
         });
 
@@ -95,6 +112,40 @@
 </script>
 
 <style>
+    @media (max-width: 600px) {
+        #skillCategories {
+            display: none;
+        }
+        #skillList{
+            display:none;
+        }
+        #responsiveSkillList{
+            display:flex !important;
+            gap:50px;
+        }
+        
+    }
+    .resTitle{
+        width: 100%;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        font-size:2em;
+        padding-bottom:30px;
+        gap:5px;
+    }
+    .skillCatRes{
+        width: 80%;
+        height: 100%;
+        background-color: var(--dark-purple);
+        border-radius: 25px;
+        z-index: 2;
+        justify-content: space-between;
+        padding: 30px;
+    }
+    #responsiveSkillList{
+        display:none;
+    }
     #skillsDiv{
         padding-bottom:100px;
     }
@@ -104,7 +155,7 @@
     }
     .skillCategory{
         background-color: var(--dark-purple);
-        padding: 20px 20px 20px 30px;
+        padding: 5px 20px 20px 30px;
         border-radius: 25px;
         width: 400px;
         height: 90px;
@@ -161,6 +212,10 @@
     }
     .skillDiv>img{
         width:75px;
+        transition: all 0.3s ease-in-out;
+    }
+    .skillDiv:hover>img{
+        transform: scale(1.15);
     }
     .skillName{
         font-weight:bold;
