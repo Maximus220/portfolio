@@ -1,6 +1,6 @@
 
 <div>
-    <img class="logoFooter" src="./res/logotxt.png" alt="Maximus logo">
+    <img class="logoFooter" src="./res/logotxt.png" alt="Maximus logo" onclick="scrollToF('header')">
 </div>
 
 <div class="textFooter">
@@ -14,11 +14,13 @@
         .logoFooter{
             width: 100% !important;
             padding-top:0px !important;
-            padding-bottom:100px;
+            height: auto !important;
         }
-        footer{
+        #footer{
+            flex-direction: column-reverse !important;
+            gap: 40px !important;
             margin-bottom:0px !important;
-            gap:10px !important;
+            margin: 30px 0px !important;
         }
     }
     .githubFooterText{
@@ -26,6 +28,7 @@
         justify-content: center;
         align-items: center;
         gap:10px;
+        text-decoration: underline;
     }
     .githubFooterText img{
         width:40px;

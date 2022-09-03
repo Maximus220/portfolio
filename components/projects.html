@@ -41,8 +41,8 @@
     var projects = [];
     var topics = {};
     $.ajax({
-        type: "POST",
-        url: "/projectList",
+        dataType: "json",
+        url: "/json/projects.json",
         success: function(data)
         {
             console.log(data)
@@ -69,8 +69,8 @@
 
     var videos = [];
     $.ajax({
-        type: "POST",
-        url: "/videoList",
+        dataType: "json",
+        url: "/json/videos.json",
         success: function(data)
         {
             videos = data;
@@ -141,6 +141,7 @@
             return t[0]==topic;
         })[1];
         $("#projectDisplay").empty();
+        $("#projectDisplayResp").empty();
         //order by project langlist sum
         // projects.sort((a,b)=>{
         //     let l1 = Object.entries(a.langList).reduce((a,b)=>{if(a[1])return a[1]+b[1];else return a+b[1];},0);
@@ -153,6 +154,7 @@
         projects.forEach((p,i)=>{
             console.log(p)
             $("#projectDisplay").append(getProjectDisplay(p, i%2).prop("outerHTML"));
+            $("#projectDisplayResp").append(getProjectDisplayResponsive(p).prop("outerHTML"));
         });
         AOS.refreshHard();
     }
@@ -201,63 +203,49 @@
         p2.append(btnList);
 
         if(!imageLeft){
-            d.append("<div class='flex'>"+p1.prop('outerHTML')+p2.prop('outerHTML')+"</div>");
+            d.append("<div class='flexNowrap'>"+p1.prop('outerHTML')+p2.prop('outerHTML')+"</div>");
         }else{
-            d.append("<div class='flex'>"+p2.prop('outerHTML')+p1.prop('outerHTML')+"</div>");
+            d.append("<div class='flexNowrap'>"+p2.prop('outerHTML')+p1.prop('outerHTML')+"</div>");
         }
         
         return d;
     }
 
-    // function getProjectDisplayResponsive(project){
-    //     let d = $("<div>");
-    //     d.addClass("project flexC");
-    //     d.append("<h1>"+project.name+"</h1>");
-    //     let p1 = $("<div>");
-    //     let p2 = $("<div>");
-    //     p1.addClass("flexC imageWrapper");
-    //     p2.addClass("flexC leftDisplaysProject");
+    function getProjectDisplayResponsive(project){
+        let d = $("<div>");
+        d.addClass("projectFlex flexC shadowBox");
+        d.attr("data-aos","fade-up");
+        let d1 = $("<div>");
+        d1.addClass("flexNowrap");
 
-    //     //IMG
-    //     p1.append("<img class='shadowBox projectImage' src='"+project.image+"' alt='projectImage'></img>")
+        //LANG AND TITLE
+        let langListP = Object.entries(project.langList)
+        d1.append("<div class='languageColor' style='background-color:"+(langList[langListP[0][0]]?langList[langListP[0][0]].color:langList["Other"].color)+";'></div>");
+        d1.append("<h1 class='titleResponsive'>"+project.name+"</h1>");
+        d.append(d1)
 
-    //     //DESCRIPTION & LANGS
-    //     p2.append("<div class='projectDescription shadowBox "+(imageLeft?"projectDescriptionLeft":"")+"'>"+project.description+"</div>");
-    //     let langListDiv = $("<div>");
-    //     langListDiv.addClass("flex listDiv")
-    //     let langListP = Object.entries(project.langList)
-    //     let tot = langListP.reduce((a,b)=>{if(a[1])return a[1]+b[1];else return a+b[1];},0);
-    //     langListP.forEach(([name, amount])=>{
-    //         let percent = amount / tot * 100;
-    //         if(percent>30){
-    //             langListDiv.append("<div class='languageWrapper shadowBox flex'><div class='languageColor' style='background-color:"+(langList[name]?langList[name].color:langList["Other"].color)+";'></div>"+name+"</div>");
-    //         }
-    //     });
-    //     p2.append(langListDiv);
+        d.append("<img class='projectImage' src='"+project.image+"' alt='projectImage'></img>")
 
-    //     //TAGS
-    //     let tagsList = $("<div>");
-    //     tagsList.addClass("flex listDiv");
-    //     project.topics.forEach((tag)=>{
-    //         tagsList.append("<div class='tag shadowBox'>#"+tag+"</div>");
-    //     });
-    //     p2.append(tagsList);
+        //TAGS
+        let tagsList = $("<div>");
+        tagsList.addClass("flex listDiv");
+        project.topics.forEach((tag)=>{
+            tagsList.append("<div class='tag'>#"+tag+"</div>");
+        });
+        d.append(tagsList);
 
-    //     //BTN
-    //     let btnList = $("<div>");
-    //     btnList.addClass("flex listDiv");
-    //     btnList.append("<a class='btn-icon' href='https://github.com/Maximus220/"+project.github+"' target='_blank'><img src='./res/github.svg'></a>");
-    //     if(project.homepage) btnList.append("<a class='btn-icon' href='"+project.homepage+"' target='_blank'><img src='./res/play.svg'></a>");
-    //     p2.append(btnList);
+        //description
+        d.append("<div class='projectDescription'>"+project.description+"</div>");
 
-    //     if(!imageLeft){
-    //         d.append("<div class='flex'>"+p1.prop('outerHTML')+p2.prop('outerHTML')+"</div>");
-    //     }else{
-    //         d.append("<div class='flex'>"+p2.prop('outerHTML')+p1.prop('outerHTML')+"</div>");
-    //     }
-        
-    //     return d;
-    // }
+        //BTN
+        let btnList = $("<div>");
+        btnList.addClass("flex listDiv");
+        btnList.append("<a class='btn-icon' href='https://github.com/Maximus220/"+project.github+"' target='_blank'><img src='./res/github.svg'></a>");
+        if(project.homepage) btnList.append("<a class='btn-icon' href='"+project.homepage+"' target='_blank'><img src='./res/play.svg'></a>");
+        d.append(btnList);
+
+        return d;
+    }
 
     function getVideoDisplay(project, imageLeft){
         let d = $("<div>");
@@ -291,11 +279,39 @@
         return d;
     }
 
+    function getVideoDisplayResponsive(project){
+        let d = $("<div>");
+        d.addClass("projectFlex flexC shadowBox");
+        d.attr("data-aos","fade-up");
+        let d1 = $("<div>");
+        d1.addClass("flexNowrap");
+
+        //LANG AND TITLE
+        d1.append("<h1 class='titleResponsive'>"+project.title+"</h1>");
+        d.append(d1)
+
+        d.append("<img class='projectImage' src='"+(project.img?project.img:"https://img.youtube.com/vi/"+project.id+"/maxresdefault.jpg")+"' alt='projectImage'></img>")
+
+        //description
+        d.append("<div class='projectDescription'>"+project.description+"</div>");
+
+        //BTN
+        let btnList = $("<div>");
+        btnList.addClass("flex listDiv");
+        btnList.append("<a class='btn-icon' href='https://youtu.be/"+project.id+"' target='_blank'><img src='./res/play.svg'></a>");
+        d.append(btnList);
+
+        return d;
+    }
+
     function showMontage(){
         $("#programmingSorting").css("display","none");
         $("#projectDisplay").empty();
+        $("#projectDisplayResp").empty();
         videos.forEach((v,i)=>{
             $("#projectDisplay").append(getVideoDisplay(v, i%2).prop("outerHTML"));
+            console.log(getVideoDisplayResponsive(v))
+            $("#projectDisplayResp").append(getVideoDisplayResponsive(v).prop("outerHTML"));
         })
         AOS.refreshHard();
         $(".projectSelected").removeClass("projectSelected")
@@ -320,10 +336,45 @@
         }
         #projectDisplayResp{
             display: flex !important;
+            max-width: 100%;
+            gap: 40px !important;
+        }
+        .projectImage{
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width:0px !important;
+            min-height:0px !important;
+            border-radius: 0px !important;
+            max-height: 400px !important;
+            padding-top:5px;
+        }
+        .projectFlex{
+            width: 80%;
+            border-radius: 25px;
+            padding: 10px 0px;
+            gap: 10px !important;
+        }
+        .listDiv{
+            justify-content: center !important;
+            gap:5px !important;
+            padding: 5px !important;;
+        }
+        .projectDescription{
+            width: 100% !important;
+            text-align: center !important;
+            margin: 0px !important;
+            padding: 15px !important;
+        }
+        .tag{
+            padding: 5px !important;
+        }
+        .titleResponsive{
+            max-width:80%;
+            text-align: center;
+            overflow-wrap: anywhere;
         }
     
     }
-
     #projectDisplayResp{
         display: none;
     }

@@ -1,22 +1,27 @@
 <div id="contactList">
     <a class="contactEl" href="https://twitter.com/Maximus_pro_" style="background-color:#00ACEE;" target="_blank">
         <img src="./res/twitter.svg" alt="Twitter logo">
+        <span class="contactText">@Maximus_pro_</span>
     </a>
 
     <a class="contactEl" href="https://github.com/Maximus220" style="background-color:#333;" target="_blank">
         <img src="./res/github_full.svg" alt="Github logo">
+        <span class="contactText">Maximus220</span>
     </a>
 
     <a class="contactEl" onclick="alert('@Maxime ・ マキシム#9555')" style="background-color:#5865F2;" target="_blank">
         <img src="./res/discord.svg" alt="Discord logo">
+        <span class="contactText">@Maxime ・ マキシム#9555</span>
     </a>
 
     <a class="contactEl" href="https://www.youtube.com/channel/UCNlnUX3b5PHX0cWpRKo1Lcw" style="background-color:#B2071D;" target="_blank">
         <img src="./res/youtube.svg" alt="Youtube logo">
+        <span class="contactText">Montage channel</span>
     </a>
 
     <a class="contactEl" href="mailto: cmaximus2207@outlook.fr" style="background-color:#c2b727;">
         <img src="./res/mail.svg" alt="Mail logo">
+        <span class="contactText">My mail</span>
     </a>
 </div>
 
@@ -38,6 +43,28 @@
 </script>
 
 <style>
+    @media (max-width: 600px) {
+        .contactText{
+            display:flex !important;
+            text-decoration: none !important;
+            font-size:1.4em;
+            text-align: end;
+        }
+        .contactEl{
+            width: 80% !important;
+            gap:30px;
+            justify-content: space-between !important;
+        }
+        #contactList{
+            width: 100% !important;
+        }
+        a{
+            text-decoration: none !important;
+        }
+    }
+    .contactText{
+        display:none;
+    }
     .contactEl{
         display: flex;
         align-items: center;

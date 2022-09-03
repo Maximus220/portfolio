@@ -80,6 +80,14 @@
             gap:20px;
             flex-wrap: wrap;
         }
+        .flexNowrap{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            gap:20px;
+            flex-wrap: nowrap;
+        }
         .flexC{
             display: flex;
             justify-content: center;
@@ -154,7 +162,7 @@
             <div id="contactDiv" class="flexC"></div>
         </div>
 
-        <footer class="flex"></footer>
+        <footer class="flexNowrap" id="footer"></footer>
     </body>
 
     <script>
