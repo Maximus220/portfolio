@@ -128,8 +128,8 @@
             "imgPath":"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg"
         },
         {
-            "name":"Excell",
-            "imgPath":"../res/skills/excell.svg"
+            "name":"Excel",
+            "imgPath":"../res/skills/excel.svg"
         }
     ],
     "LinkFormat":"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/{name}/{name}-original.svg"
