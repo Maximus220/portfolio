@@ -3,7 +3,7 @@
         "name": "Balisell",
         "github": "balisell",
         "image": "./res/projects/balisell.webp",
-        "description": "🔪 Market place for the butterfly knife aftermarket (integrating Instagram offers scrapping).",
+        "description": "🔪 Market place for the butterfly knife aftermarket (featuring Instagram offers scrapping).",
         "langList": {
             "Vue": 62093,
             "JavaScript": 30366,
@@ -36,7 +36,7 @@
             "website"
         ],
         "homepage": "",
-        "size": 194631
+        "size": 194676
     },
     {
         "name": "Pong Unity",
@@ -55,6 +55,27 @@
         ],
         "homepage": "https://github.com/Maximus220/Pong-Unity/releases/tag/V.1.0",
         "size": 419
+    },
+    {
+        "name": "Gamerack",
+        "github": "Gamerack",
+        "image": "./res/projects/gamerack.png",
+        "description": "🎮 Game launcher and installer for cracked games.",
+        "langList": {
+            "JavaScript": 18190,
+            "Vue": 17538,
+            "HTML": 772
+        },
+        "vibility": "private",
+        "topics": [
+            "crack",
+            "cracked",
+            "game",
+            "launcher",
+            "software"
+        ],
+        "homepage": "",
+        "size": 423
     },
     {
         "name": "Twitter tracker",
@@ -77,12 +98,13 @@
         "size": 543
     },
     {
-        "name": "Portfolio",
+        "name": "portfolio",
         "github": "portfolio",
         "image": "./res/projects/portfolio.png",
         "description": "🖼️ Personal portfolio website listing all my current/finished projects and lot of useful informations.",
         "langList": {
-            "HTML": 38111
+            "HTML": 40361,
+            "JavaScript": 1628
         },
         "vibility": "public",
         "topics": [
@@ -90,7 +112,7 @@
             "website"
         ],
         "homepage": "https://maxime.click",
-        "size": 5660
+        "size": 6223
     },
     {
         "name": "2048 Vue",
@@ -98,9 +120,9 @@
         "image": "./res/projects/2048.png",
         "description": "🧮 2048 game implementation with Vue, including multiple sizes, game history, ...",
         "langList": {
-            "Vue": 13989,
+            "Vue": 12524,
+            "JavaScript": 7297,
             "CSS": 2623,
-            "JavaScript": 734,
             "HTML": 493
         },
         "vibility": "private",
@@ -112,7 +134,7 @@
             "website"
         ],
         "homepage": "",
-        "size": 15
+        "size": 18
     },
     {
         "name": "Logicysm",
@@ -133,6 +155,27 @@
         ],
         "homepage": "https://maximus220.github.io/Logicysm/",
         "size": 1011
+    },
+    {
+        "name": "Cistercian number",
+        "github": "cistercian-numbers",
+        "image": "./res/projects/cistercian.png",
+        "description": "🧮 Cistercian number generator and quiz.",
+        "langList": {
+            "Vue": 7268,
+            "CSS": 1030,
+            "HTML": 526,
+            "JavaScript": 422
+        },
+        "vibility": "private",
+        "topics": [
+            "cistercian",
+            "number",
+            "software",
+            "website"
+        ],
+        "homepage": "http://fyjrfej.cluster029.hosting.ovh.net/",
+        "size": 13
     },
     {
         "name": "End'ouille",
